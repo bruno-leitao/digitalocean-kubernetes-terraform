@@ -1,0 +1,46 @@
+name: Deploy Kubernetes Cluster
+
+env:
+  do_api_token: ${{ secrets.DO_API_TOKEN }}
+  do_environment: Staging
+  pg_user: ${{ secrets.PG_USER }}
+  pg_pass: ${{ secrets.PG_PASS }}
+  pg_server: ${{ secrets.PG_SERVER }}
+
+on:
+  push:
+    branches: [staging]
+
+jobs:
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Init
+        run: terraform init -input=false -backend-config=backend.hcl
+
+      - name: Terraform Validation
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+  terraform-apply:
+    name: Terraform Apply
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Terraform Init
+      run: terraform init -input=false -backend-config=backend.hcl
+
+    - name: Terraform Validation
+      run: terraform validate
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+        -var "do_api_token=${{ secrets.DO_API_TOKEN }}"
