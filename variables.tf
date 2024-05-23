@@ -19,7 +19,7 @@ variable "do_region" {
 }
 
 variable "do_vpc_ip_range" {
-  default     = "10.0.20.0/24"
+  default     = ""
   description = "DigitalOcean VPC Network IP Range"
 }
 

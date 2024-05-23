@@ -2,7 +2,6 @@ name: Deploy Kubernetes Cluster
 
 env:
   do_api_token: ${{ secrets.DO_API_TOKEN }}
-  do_environment: "production"
 
 on:
   push:
@@ -22,7 +21,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false
+        run: terraform plan -input=false -var="do_environment=production" -var="do_vpc_ip_range=10.0.10.0/24"
 
   terraform-apply:
     name: Terraform Apply
@@ -39,5 +38,5 @@ jobs:
       run: terraform validate
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -var="do_environment=production" -var="do_vpc_ip_range=10.0.10.0/24"
         -var "do_api_token=${{ secrets.DO_API_TOKEN }}"
