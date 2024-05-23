@@ -1,4 +1,4 @@
-name: Deploy Kubernetes Cluster
+name: Deploy Kubernetes Cluster - Production
 
 env:
   do_api_token: ${{ secrets.DO_API_TOKEN }}
