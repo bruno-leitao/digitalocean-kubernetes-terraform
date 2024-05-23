@@ -2,6 +2,7 @@ name: Deploy Kubernetes Cluster
 
 env:
   do_api_token: ${{ secrets.DO_API_TOKEN }}
+  do_environment: staging
 
 on:
   push:
