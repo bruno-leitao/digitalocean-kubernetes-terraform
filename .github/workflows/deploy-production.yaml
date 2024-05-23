@@ -2,10 +2,6 @@ name: Deploy Kubernetes Cluster
 
 env:
   do_api_token: ${{ secrets.DO_API_TOKEN }}
-  do_environment: Production
-  pg_user: ${{ secrets.PG_USER }}
-  pg_pass: ${{ secrets.PG_PASS }}
-  pg_server: ${{ secrets.PG_SERVER }}
 
 on:
   push:
@@ -19,8 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Terraform Init
-        run: export PG_CONN_STR=postgres://${{ secrets.PG_USER }}:${{ secrets.PG_PASS }}@${{ secrets.PG_SERVER }}/terraform
-          terraform init -input=false
+        run: terraform init -input=false -backend-config=backend.hcl
 
       - name: Terraform Validation
         run: terraform validate
@@ -37,8 +32,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Terraform Init
-      run: export PG_CONN_STR=postgres://${{ secrets.PG_USER }}:${{ secrets.PG_PASS }}@${{ secrets.PG_SERVER }}/terraform
-          terraform init -input=false
+      run: terraform init -input=false -backend-config=backend.hcl
 
     - name: Terraform Validation
       run: terraform validate
