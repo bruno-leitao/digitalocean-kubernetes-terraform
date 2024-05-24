@@ -18,7 +18,7 @@ jobs:
       - name: Terraform Init
         run: export PGUSER=doadmin
           export PGPASSWORD=${{ secrets.DO_PG_PASS }}
-        run: terraform init
+          terraform init
 
       - name: Terraform Validation
         run: terraform validate
@@ -39,7 +39,7 @@ jobs:
     - name: Terraform Init
       run: export PGUSER=doadmin
         export PGPASSWORD=${{ secrets.DO_PG_PASS }}
-      run: terraform init
+        terraform init
 
     - name: Terraform Validation
       run: terraform validate
