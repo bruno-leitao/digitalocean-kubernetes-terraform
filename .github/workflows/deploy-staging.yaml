@@ -1,10 +1,5 @@
 name: Deploy Kubernetes Cluster - Staging
 
-env:
-  do_api_token: ${{ secrets.DO_API_TOKEN }}
-  PGUSER: "doadmin"
-  PGPASSWORD: ${{ secrets.DO_PG_PASS }}
-
 on:
   workflow_dispatch:
 
