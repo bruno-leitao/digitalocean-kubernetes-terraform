@@ -27,7 +27,9 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false -var="do_environment=staging" -var="do_vpc_ip_range=10.0.20.0/24"
+        run: terraform plan
+          -var="do_environment=staging"
+          -var="do_vpc_ip_range=10.0.20.0/24"
 
   terraform-apply:
     name: Terraform Apply
@@ -46,5 +48,7 @@ jobs:
       run: terraform validate
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -var="do_environment=staging" -var="do_vpc_ip_range=10.0.20.0/24"
+      run: terraform apply -auto-approve
+        -var="do_environment=staging"
+        -var="do_vpc_ip_range=10.0.20.0/24"
         -var "do_api_token=${{ secrets.DO_API_TOKEN }}"
