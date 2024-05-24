@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 env:
+  do_api_token: ${{ secrets.DO_API_TOKEN }}
   PGUSER: doadmin
   PGPASSWORD: ${{ secrets.DO_PG_PASS }}
 
@@ -29,6 +30,7 @@ jobs:
         run: terraform plan
           -var="do_environment=staging"
           -var="do_vpc_ip_range=10.0.20.0/24"
+          -var "do_api_token=${{ secrets.DO_API_TOKEN }}"
 
   terraform-apply:
     name: Terraform Apply
