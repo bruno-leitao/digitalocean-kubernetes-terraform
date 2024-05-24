@@ -15,10 +15,12 @@ jobs:
         id: extract_branch
 
       - uses: actions/checkout@v3
-      - name: Terraform Init
+      - name: Export PostgreSQL Variables
         run: export PGUSER=doadmin
           export PGPASSWORD=${{ secrets.DO_PG_PASS }}
-          terraform init
+
+      - name: Terraform Init
+        run: terraform init
 
       - name: Terraform Validation
         run: terraform validate
