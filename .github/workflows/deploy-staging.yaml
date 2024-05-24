@@ -15,12 +15,8 @@ jobs:
         id: extract_branch
 
       - uses: actions/checkout@v3
-      - name: Export PostgreSQL Variables
-        run: export PGUSER=doadmin
-          export PGPASSWORD=${{ secrets.DO_PG_PASS }}
-
       - name: Terraform Init
-        run: terraform init
+        run: export PGUSER=doadmin PGPASSWORD=${{ secrets.DO_PG_PASS }} && terraform init
 
       - name: Terraform Validation
         run: terraform validate
@@ -39,9 +35,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Terraform Init
-      run: export PGUSER=doadmin
-        export PGPASSWORD=${{ secrets.DO_PG_PASS }}
-        terraform init
+      run: export PGUSER=doadmin PGPASSWORD=${{ secrets.DO_PG_PASS }} && terraform init
 
     - name: Terraform Validation
       run: terraform validate
