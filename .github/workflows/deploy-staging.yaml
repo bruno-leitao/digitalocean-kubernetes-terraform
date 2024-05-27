@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PGUSER: doadmin
-  PGPASSWORD: ${{ secrets.DO_PG_PASS }}
+  PG_CONN_STR: ${{ secrets.PG_CONN_STR_STG }}
 
 jobs:
   terraform-plan:
