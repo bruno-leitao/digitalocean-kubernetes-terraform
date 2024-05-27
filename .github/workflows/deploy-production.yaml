@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
 env:
-  do_api_token: ${{ secrets.DO_API_TOKEN }}
   PGUSER: doadmin
   PGPASSWORD: ${{ secrets.DO_PG_PASS }}
 
