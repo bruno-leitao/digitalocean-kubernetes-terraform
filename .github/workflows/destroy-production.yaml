@@ -1,4 +1,4 @@
-name: Destroy Kubernetes Cluster - Staging
+name: Destroy Kubernetes Cluster - Production
 
 on:
   workflow_dispatch:
