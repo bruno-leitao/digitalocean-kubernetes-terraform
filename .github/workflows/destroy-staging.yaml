@@ -1,0 +1,60 @@
+name: Deploy Kubernetes Cluster - Staging
+
+on:
+  workflow_dispatch:
+
+env:
+  PG_CONN_STR: ${{ secrets.PG_CONN_STR_STG }}
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    name: Terraform Plan
+    
+    steps:
+      - name: Extract Branch Name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        id: extract_branch
+
+      - uses: actions/checkout@v4
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validation
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+          -var="do_environment=staging"
+          -var="do_vpc_ip_range=10.0.20.0/24"
+          -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
+
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    needs: terraform-plan
+    name: Terraform Destroy
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DO_API_TOKEN }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validation
+      run: terraform validate
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
+        -var="do_environment=staging"
+        -var="do_vpc_ip_range=10.0.20.0/24"
+        -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
+
+    - name: Install Services
+      run: doctl kubernetes 1-click install 72cdbaa7-1c2c-4c4b-bb3e-0dd0ea251e98 --1-clicks ingress-nginx,cert-manager,argocd
