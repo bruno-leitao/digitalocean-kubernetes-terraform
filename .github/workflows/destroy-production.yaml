@@ -31,10 +31,10 @@ jobs:
           -var="do_vpc_ip_range=10.0.20.0/24"
           -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
 
-  terraform-apply:
+  terraform-destroy:
     runs-on: ubuntu-latest
     needs: terraform-plan
-    name: Terraform Apply
+    name: Terraform Destroy
 
     steps:
     - uses: actions/checkout@v4
@@ -50,8 +50,8 @@ jobs:
     - name: Terraform Validation
       run: terraform validate
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
         -var="do_environment=staging"
         -var="do_vpc_ip_range=10.0.20.0/24"
         -var="do_api_token=${{ secrets.DO_API_TOKEN }}"

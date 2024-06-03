@@ -65,7 +65,7 @@ variable "doks_auto_scale" {
 }
 
 variable "doks_node_count" {
-  default     = "2"
+  default     = "3"
   description = "DigitalOcean Nodes in Cluster Pool"
 }
 
