@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PG_CONN_STR: ${{ secrets.PG_CONN_STR_STG }}
+  PG_CONN_STR: ${{ secrets.PG_CONN_STR }}
 
 jobs:
   terraform-plan:
