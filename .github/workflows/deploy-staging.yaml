@@ -5,6 +5,9 @@ on:
 
 env:
   PG_CONN_STR: ${{ secrets.PG_CONN_STR_STG }}
+  do_environment: staging
+  do_vpc_ip_range: 10.0.20.0/24
+  do_api_token: ${{ secrets.DO_API_TOKEN }}
 
 jobs:
   terraform-plan:
@@ -27,9 +30,6 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
-          -var="do_environment=staging"
-          -var="do_vpc_ip_range=10.0.20.0/24"
-          -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
 
   terraform-apply:
     runs-on: ubuntu-latest
@@ -52,9 +52,3 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
-        -var="do_environment=staging"
-        -var="do_vpc_ip_range=10.0.20.0/24"
-        -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
-
-    - name: Install Services
-      run: doctl kubernetes 1-click install 72cdbaa7-1c2c-4c4b-bb3e-0dd0ea251e98 --1-clicks ingress-nginx,cert-manager,argocd
