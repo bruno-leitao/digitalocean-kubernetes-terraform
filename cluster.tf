@@ -23,4 +23,9 @@ resource "digitalocean_kubernetes_cluster" "cluster" {
     max_nodes  = 3
     tags       = local.do_tags
   }
+
+  provisioner "remote-exec" {
+    inline = [
+      "doctl kubernetes 1-click install ${digitalocean_kubernetes_cluster.cluster.id} --1-clicks ingress-nginx,cert-manager,argocd"]
+  }
 }

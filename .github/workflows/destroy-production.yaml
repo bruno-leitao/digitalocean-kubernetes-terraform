@@ -5,6 +5,9 @@ on:
 
 env:
   PG_CONN_STR: ${{ secrets.PG_CONN_STR }}
+  do_environment: production
+  do_vpc_ip_range: 10.0.10.0/24
+  do_api_token: ${{ secrets.DO_API_TOKEN }}
 
 jobs:
   terraform-plan:
@@ -27,9 +30,6 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
-          -var="do_environment=staging"
-          -var="do_vpc_ip_range=10.0.20.0/24"
-          -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
 
   terraform-destroy:
     runs-on: ubuntu-latest
@@ -47,6 +47,3 @@ jobs:
 
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
-        -var="do_environment=staging"
-        -var="do_vpc_ip_range=10.0.20.0/24"
-        -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
