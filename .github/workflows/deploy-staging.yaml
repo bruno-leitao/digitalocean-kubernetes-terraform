@@ -55,3 +55,6 @@ jobs:
         -var="do_environment=staging"
         -var="do_vpc_ip_range=10.0.20.0/24"
         -var="do_api_token=${{ secrets.DO_API_TOKEN }}"
+
+    - name: Install Services
+      run: doctl kubernetes 1-click install ${digitalocean_kubernetes_cluster.cluster.id} --1-clicks ingress-nginx,cert-manager,argocd
