@@ -19,7 +19,7 @@ spec:
           service:
             name: website
             port:
-              number: 3330
+              number: 3001
   tls:
   - hosts:
     - qa.tourissmo.com

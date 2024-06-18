@@ -19,7 +19,7 @@ spec:
           service:
             name: backoffice
             port:
-              number: 3332
+              number: 3000
   tls:
   - hosts:
     - bo-qa.tourissmo.com
